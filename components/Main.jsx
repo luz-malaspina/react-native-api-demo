@@ -1,9 +1,10 @@
 import { useEffect, useState } from 'react';
-import { View } from 'react-native';
+import { View, FlatList } from 'react-native';
 import { getLatestGames } from '../lib/metacritic';
-import { ScrollView,ActivityIndicator } from 'react-native';
+import { ActivityIndicator } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { GameCard } from './GameCard';
+import { Logo } from './Logo';
 
 export function Main() {
   const [games, setGames] = useState([]);
@@ -23,16 +24,18 @@ export function Main() {
   
   return (
     <View style={{paddingTop: insets.top, paddingBottom: insets.bottom, flex: 1}}>
+        <View style={{marginBottom: 20}}>
+            <Logo width={180} height={40}/>
+        </View>
         { games.length === 0 ? (
         <ActivityIndicator/> 
         ) : (
-            <ScrollView>
-                {games && games.map(game => 
-                    <GameCard game={game} key={game.slug}/>
-                )}
-            </ScrollView>
+            <FlatList 
+                data={games} 
+                keyExtractor={(game)=> game.slug} 
+                renderItem={({item})=> <GameCard game={item}/>}
+            />
         )}
-     
     </View>
   );
 }
