@@ -1,25 +1,34 @@
 import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, View, Text, TouchableHighlight } from 'react-native';
+import { useEffect, useState } from 'react';
+import { StyleSheet, View, Text, Image } from 'react-native';
+import { getLatestGames } from './lib/metacritic';
 
 export default function App() {
+  const [games, setGames] = useState([]);
+
+  useEffect(() => {
+    (async () => {
+      try {
+        const result = await getLatestGames();
+        console.log("games length:", result?.length);
+        console.log("first game:", result?.[0]);
+        setGames(result);
+      } catch (e) {
+        console.log("getLatestGames error:", e?.message || e);
+      }
+    })();
+  }, []);
+  
+
   return (
     <View style={styles.container}>
       <StatusBar style="auto" />
-      <TouchableHighlight 
-        onPress={()=> alert("El puesto es tuyo, comenzas en febrero.")}
-        underlayColor={'#red'} 
-        style={{
-          color: '#fff',
-          backgroundColor: '#000', 
-          height: 80, 
-          width: 100,
-          justifyContent: 'center',
-          alignItems: 'center',
-          borderRadius: 20,
-          cursor: 'pointer'
-        }}>
-        <Text style={{color: 'red'}}>Pulsa aqui</Text>
-      </TouchableHighlight>
+      {games && games.map(game => 
+        <View key={game.slug} style={styles.card}>
+          <Image source={{uri: game.image}} style={styles.image}/>
+          <Text>{game.description && game.description}</Text>
+        </View>
+      )}
     </View>
   );
 }
@@ -30,5 +39,12 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
     alignItems: 'center',
     justifyContent: 'center',
+  },
+  image: {
+    width: 100, 
+    height: 100, 
+    borderRadius: 10
+  },
+  card: {
   }
 });
