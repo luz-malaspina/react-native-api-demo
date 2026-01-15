@@ -2,6 +2,8 @@ import { StatusBar } from 'expo-status-bar';
 import { useEffect, useState } from 'react';
 import { StyleSheet, View, Text, Image } from 'react-native';
 import { getLatestGames } from './lib/metacritic';
+import { Constants } from 'expo-constants';
+import { ScrollView } from 'react-native-web';
 
 export default function App() {
   const [games, setGames] = useState([]);
@@ -21,6 +23,7 @@ export default function App() {
   
 
   return (
+    <ScrollView>
     <View style={styles.container}>
       <StatusBar style="auto" />
       {games && games.map(game => 
@@ -30,6 +33,7 @@ export default function App() {
         </View>
       )}
     </View>
+    </ScrollView>
   );
 }
 
@@ -39,6 +43,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
     alignItems: 'center',
     justifyContent: 'center',
+    paddingTop: Constants.statusBarHeight
   },
   image: {
     width: 100, 
