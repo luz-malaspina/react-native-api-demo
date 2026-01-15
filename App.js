@@ -1,11 +1,25 @@
 import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, View, Text, TouchableHighlight } from 'react-native';
 
 export default function App() {
   return (
     <View style={styles.container}>
-      <Text>Open up App.js to start working on your app!</Text>
       <StatusBar style="auto" />
+      <TouchableHighlight 
+        onPress={()=> alert("El puesto es tuyo, comenzas en febrero.")}
+        underlayColor={'#red'} 
+        style={{
+          color: '#fff',
+          backgroundColor: '#000', 
+          height: 80, 
+          width: 100,
+          justifyContent: 'center',
+          alignItems: 'center',
+          borderRadius: 20,
+          cursor: 'pointer'
+        }}>
+        <Text style={{color: 'red'}}>Pulsa aqui</Text>
+      </TouchableHighlight>
     </View>
   );
 }
@@ -16,5 +30,5 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
     alignItems: 'center',
     justifyContent: 'center',
-  },
+  }
 });
