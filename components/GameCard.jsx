@@ -10,7 +10,9 @@ export function GameCard ({ game }) {
             <View style={styles.gameInfo}>
                 <Text style={styles.title}>{game.title && game.title}</Text>
                 <Text style={styles.genre}>{game.genre}</Text>
-                <Text style={styles.description}>{game.description && game.description}</Text>
+                <Text style={styles.description}>
+                    {game.description && game.description.slice(0,100)}...
+                </Text>
             </View>
         </View>
     )
@@ -22,8 +24,8 @@ export function AnimatedGameCard ({game, index})  {
     useEffect(()=> {
         Animated.timing(opacity, {
             toValue: 1,
-            duration: 500,
-            delay: index * 500,
+            duration: 300,
+            delay: index * 300,
             useNativeDriver: true
         }).start();
     }, [opacity, index]);
@@ -37,26 +39,31 @@ export function AnimatedGameCard ({game, index})  {
 
 const styles = StyleSheet.create({
     image: {
-      width: 150, 
+      width: 100, 
       height: 150, 
       borderRadius: 10
     },
     card: {
-      paddingTop: 10,
+      padding: 10,
       flexDirection: 'row',
-      alignItems: 'center'
+      borderWidth: 2,
+      backgroundColor: 'rgba(30, 41, 59, 0.8)',
+      marginTop: 10,
+      borderRadius: 10
     },
     genre: {
         color: 'green'
     },
     title: {
         fontWeight: 'bold',
-        marginTop: 10
+        marginTop: 10,
+        color: '#fff'
     },
     gameInfo: {
         padding: 10
     },
     description: {
-       width: 280
+       maxWidth: 260,
+       color: '#fff'
     }
   });
